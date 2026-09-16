@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-interchange"
-version = "0.1.1"
+version = "0.1.2"
 description = "Python SDK for AVEL (Agent Verification Layer) — identity/reputation verification for agent-to-agent payments"
 readme = "README.md"
 license = "MIT"
@@ -19,7 +19,17 @@ classifiers = [
 # dell'agente da quando l'Interchange ha aggiunto l'autenticazione
 # wallet trust-on-first-use su /pay, /withdraw e /balance (vedi
 # docs/AIS_CONTROL_PLANE.md, sezione "Audit di sicurezza completo").
-dependencies = ["httpx>=0.27", "eth-account>=0.13"]
+# mcp e' una dipendenza di base (non opzionale) perche' il console script
+# `agent-interchange` sotto e' pensato per girare via `uvx agent-interchange`
+# dal registro MCP ufficiale — un extra opzionale non sarebbe applicato in
+# quel percorso di installazione. Non verificato dal vivo in questo repo
+# (build nativa di rpds-py fallita nell'ambiente di sviluppo Termux/proot,
+# stesso vincolo gia' documentato per langchain-core/crewai/autogen-core in
+# framework_tools.py) — vedi la HONESTY NOTE in mcp_server.py.
+dependencies = ["httpx>=0.27", "eth-account>=0.13", "mcp>=1.0"]
+
+[project.scripts]
+agent-interchange = "agent_interchange.mcp_server:main"
 
 [project.urls]
 Homepage = "https://github.com/Ensi81/Avel"
@@ -31,14 +41,6 @@ Repository = "https://github.com/Ensi81/Avel"
 # Version pinned to match the main repo's own x402 integration, verified
 # together in the same session.
 deposit = ["x402[httpx,evm]==2.20.0"]
-
-# Solo per agent_interchange.mcp_server — espone verify()/
-# issue_challenge()/verify_challenge()/get_verdict() come tool MCP.
-# Non verificato dal vivo in questo repo (build nativa di rpds-py fallita
-# nell'ambiente di sviluppo, stesso vincolo gia' documentato per
-# langchain-core/crewai/autogen-core in framework_tools.py) — vedi la
-# HONESTY NOTE in mcp_server.py.
-mcp = ["mcp>=1.0"]
 
 [tool.setuptools.packages.find]
 include = ["agent_interchange*"]

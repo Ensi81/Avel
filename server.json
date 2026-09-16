@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Ensi81/avel",
+  "title": "AVEL",
+  "description": "Identity/reputation verification layer for agent-to-agent payments across x402, AP2, MPP, and checkout. Reads the proof an agent already produced for its own rail, returns a verdict plus both parties' reputation — never custodies or moves the payment.",
+  "repository": {
+    "url": "https://github.com/Ensi81/Avel",
+    "source": "github"
+  },
+  "version": "0.1.2",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "agent-interchange",
+      "version": "0.1.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "runtimeHint": "uvx",
+      "environmentVariables": [
+        {
+          "name": "AVEL_BASE_URL",
+          "description": "Base URL of the AVEL instance to verify against (default: https://aisrail.fly.dev)",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        },
+        {
+          "name": "AVEL_PRIVATE_KEY",
+          "description": "EVM private key of the agent identity this MCP server represents — signs every verify()/issue_challenge()/verify_challenge()/get_verdict() call. Never exposed as a tool argument.",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

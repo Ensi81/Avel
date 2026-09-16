@@ -14,13 +14,17 @@ is derived once at startup and used automatically wherever `verify()`/
 address — the model only ever supplies the OTHER party's details and the
 transaction terms.
 
-Run (stdio transport, the MCP convention for a locally-launched server):
+Run (stdio transport, the MCP convention for a locally-launched server) —
+either the console script installed with the package, or the module
+directly, both equivalent:
     AVEL_BASE_URL=https://aisrail.fly.dev \
     AVEL_PRIVATE_KEY=0x... \
-    python -m agent_interchange.mcp_server
+    uvx agent-interchange
+    # or: python -m agent_interchange.mcp_server
 
-Requires the optional `mcp` extra:
-    pip install agent-interchange[mcp]
+`mcp` is a base dependency (not optional) precisely so `uvx
+agent-interchange` — how the MCP Registry launches a stdio server — works
+without needing an extra applied.
 
 HONESTY NOTE (see kms_provider.py and framework_tools.py in the parent
 repo for the same pattern): this module's request/response logic reuses
@@ -149,5 +153,12 @@ def get_verdict(payee_address: str, nonce: str) -> dict:
     )
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Entry point for the `agent-interchange` console script (also runnable
+    via `uvx agent-interchange` once published, or `python -m
+    agent_interchange.mcp_server`)."""
     mcp.run(transport="stdio")
+
+
+if __name__ == "__main__":
+    main()
