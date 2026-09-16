@@ -4,15 +4,26 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-interchange"
-version = "0.1.0"
-description = "Python SDK for the Agent Payment Interchange"
+version = "0.1.1"
+description = "Python SDK for AVEL (Agent Verification Layer) — identity/reputation verification for agent-to-agent payments"
+readme = "README.md"
+license = "MIT"
 requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
 # eth-account è ora una dipendenza di base (non più solo di deposit()):
 # pay()/withdraw() richiedono una firma EIP-191 dalla chiave privata
 # dell'agente da quando l'Interchange ha aggiunto l'autenticazione
 # wallet trust-on-first-use su /pay, /withdraw e /balance (vedi
 # docs/AIS_CONTROL_PLANE.md, sezione "Audit di sicurezza completo").
 dependencies = ["httpx>=0.27", "eth-account>=0.13"]
+
+[project.urls]
+Homepage = "https://github.com/Ensi81/Avel"
+Repository = "https://github.com/Ensi81/Avel"
 
 [project.optional-dependencies]
 # Solo per InterchangeClient.deposit() — richiede l'handshake x402

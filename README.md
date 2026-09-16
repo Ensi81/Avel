@@ -8,6 +8,8 @@ pacchetto è lo strato client, pensato per essere pubblico e riusabile
 solo `httpx`, `eth-account` e l'URL di un'istanza raggiungibile
 (`https://aisrail.fly.dev`).
 
+<!-- mcp-name: io.github.Ensi81/avel -->
+
 ## Install
 
 ```bash
